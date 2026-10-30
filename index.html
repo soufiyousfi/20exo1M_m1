@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سلسلة تمارين تفاعلية - المقطع 01 - 4 متوسط</title>
+    <title>تمارين تفاعلية - الأعداد الطبيعية والأعداد العشرية - أولى متوسط</title>
     <style>
         :root {
             --primary: #0077b6;
@@ -72,11 +72,9 @@
         .points-badge { background: #caf0f8; color: var(--primary); padding: 3px 10px; border-radius: 15px; font-size: 0.85rem; font-weight: bold; }
         
         .reference-text { font-size: 0.85rem; color: #6c757d; margin-bottom: 10px; font-style: italic; }
-        .original-text { background: #f1faee; padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; margin-bottom: 12px; border-right: 3px solid #52b788; }
-        
         .question-text { font-size: 1.02rem; margin-bottom: 15px; font-weight: 500; }
 
-        /* تنسيق التعبيرات الرياضية برتغاض RTL */
+        /* تنسيق التعبيرات الرياضية في اتجاه LTR */
         .math { direction: ltr; unicode-bidi: isolate; display: inline-block; font-family: 'Cambria Math', serif; font-weight: bold; color: #023e8a; padding: 0 3px; }
 
         /* منطقة الإجابة */
@@ -94,7 +92,7 @@
         }
         .answer-input:focus { border-color: var(--secondary); }
 
-        /* لوحة أزرار الرموز الخاصة بـ 4م */
+        /* لوحة أزرار الرموز الخاصة بـ 1م (+ - * / , / < > = ⌫) */
         .math-keypad {
             display: flex;
             flex-wrap: wrap;
@@ -163,7 +161,7 @@
 
     <header>
         <h1>متوسطة العربي بن مهيدي — الأستاذ: يوسفي السوفي</h1>
-        <h2>السنة الرابعة متوسط — المقطع 01: الأعداد الطبيعية والأعداد الناطقة والحساب على الجذور</h2>
+        <h2>السنة الأولى متوسط — المقطع 01: الأعداد الطبيعية والأعداد العشرية</h2>
     </header>
 
     <div class="sticky-bar">
@@ -173,7 +171,7 @@
     </div>
 
     <div class="container" id="exercises-container">
-        <!-- التمارين ستولّد ديناميكياً عبر الجافاسكريبت لضمان دقة المحاولات وسلم التنقيط -->
+        <!-- التمارين ستولّد ديناميكياً عبر الجافاسكريبت -->
     </div>
 
     <!-- نافذة النهاية -->
@@ -192,7 +190,7 @@
             document.getElementById('sound-toggle').textContent = soundEnabled ? '🔊' : '🔇';
         }
 
-        // دالة إصدار الأصوات (Web Audio API)
+        // أصوات تفاعلية عبر Web Audio API
         function playTone(type) {
             if (!soundEnabled) return;
             try {
@@ -203,8 +201,8 @@
                 gain.connect(ctx.destination);
                 
                 if (type === 'success') {
-                    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-                    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); // E5
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
                     gain.gain.setValueAtTime(0.1, ctx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
                     osc.start(); osc.stop(ctx.currentTime + 0.3);
@@ -217,300 +215,280 @@
             } catch(e) {}
         }
 
-        // دالة القبول الشاملة (normalize)
+        // دالة القبول الشاملة normalize
         function normalize(str) {
             if (!str) return "";
             return str.toString()
                 .trim()
-                .replace(/[٠١٢٣٤٥٦٧٨٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d)) // الأرقام العربية
-                .replace(/\s+/g, '') // إزالة المسافات
-                .replace(/[،,.]/g, ',') // توحيد الفاصلة
+                .replace(/[٠١٢٣٤٥٦٧٨٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d))
+                .replace(/\s+/g, '')
+                .replace(/[،,.]/g, ',')
                 .replace(/[*xX]/g, '×')
                 .replace(/[-−–]/g, '-')
-                .replace(/^[a-zA-Zα-ωA-Ωابجدهوحتكلمنسعفصقرشتثخذضظغ]+=/, ''); // إزالة بوادئ مثل x = أو A =
+                .replace(/^[a-zA-Zα-ωA-Ωابجدهوحتكلمنسعفصقرشتثخذضظغ]+=/, '');
         }
 
-        // بيانات التمارين (20 تمريناً للمقطع الأول 4م)
+        // قائمة التمارين الـ 20 للمقطع الأول (أولى متوسط)
         const exercises = [
             {
                 id: 1,
-                title: "قاسم عددين طبيعيين",
-                reference: "تمرين تطبيقي",
-                originalText: "",
-                question: "عين باقي القسمة الإقليدية للعدد <span class='math'>1717</span> على <span class='math'>185</span>.",
-                exact: ["57"],
+                title: "دلالة الأرقام",
+                reference: "الكتاب المدرسي ص 17",
+                question: "في العدد العشري <span class='math'>2017,48</span>، ما هو رقم العشرات؟",
+                exact: ["1"],
                 close: [],
                 points: 1,
-                hint1: "تذكّر علاقة القسمة الإقليدية: <span class='math'>المقسوم = الحاصل × القاسم + الباقي</span>.",
-                hint2: "احسب حاصل القسمة العشري بالآلة الحاسبة، خذ الجزء الصحيح ثم اضرب القاسم في الحاصل واطرحه من 1717.",
-                steps: "<span class='math'>1717 = 185 × 9 + 57</span><br><span class='math'>1665 + 57 = 1717</span><br>النتيجة: 57",
-                grading: [["حساب حاصل القسمة الصحيح 9", "0,5 ن"], ["إيجاد الباقي 57", "0,5 ن"]]
+                hint1: "تذكّر مراتب الأرقام قبل الفاصلة: آحاد، عشرات، مئات، آلاف.",
+                hint2: "الرقم الموجود في مرتبة العشرات هو الثاني من اليمين قبل الفاصلة.",
+                steps: "في العدد 2017,48:<br>رقم الآحاد هو 7<br>رقم العشرات هو 1<br>النتيجة: 1",
+                grading: [["تحديد مرتبة العشرات بدقة", "1 ن"]]
             },
             {
                 id: 2,
-                title: "البحث عن قاسم مشترك",
-                reference: "مستوحى من الكتاب ص 14 ت 15 (الأعداد معدلة)",
-                originalText: "نعتبر العددين الطبيعيين 717 و 185.",
-                question: "هل العدد <span class='math'>3</span> قاسم مشترك للعددين <span class='math'>717</span> و <span class='math'>185</span>؟ (أجب بـ نعم أو لا)",
-                exact: ["لا", "ليسا", "غيرقاسم"],
-                close: [],
+                title: "قراءة الكتابة الحرفية",
+                reference: "تمرين تطبيقي",
+                question: "اكتب بالأرقام العدد: «أربعة آلاف وسبعة وثلاثون وحدة وستة أجزاء من مائة».",
+                exact: ["4037,06"],
+                close: ["4037,6"],
                 points: 1,
-                hint1: "استعمل قاعدة قابلية القسمة على 3 (مجموع الأرقام).",
-                hint2: "مجموع أرقام 717 هو 15 (يقبل القسمة على 3)، أما 185 فمجموع أرقامه 14 (لا يقبل القسمة على 3).",
-                steps: "مجموع أرقام 717 هو 15 يقبل القسمة على 3.<br>مجموع أرقام 185 هو 14 لا يقبل القسمة على 3.<br>النتيجة: لا",
-                grading: [["اختبار العدد الأول 717", "0,5 ن"], ["اختبار العدد الثاني 185 والقرار", "0,5 ن"]]
+                hint1: "الجزؤ الصحيح هو أربعة آلاف وسبعة وثلاثون (4037).",
+                hint2: "ستة أجزاء من مائة تعني وجود صفر في مرتبة الأجزاء من عشرة (06).",
+                steps: "الجزء الصحيح: 4037<br>الجزء العشري (أجزاء من مائة): ,06<br>النتيجة: 4037,06",
+                grading: [["كتابة الجزء الصحيح والجزء العشري بشكل صحيح", "1 ن"]]
             },
             {
                 id: 3,
-                title: "خوارزمية الفروق المتتابعة",
-                reference: "الكتاب المدرسي ص 15",
-                originalText: "احسب القاسم المشترك الأكبر للعددين 315 و 210 بطريقة الفروق المتتابعة.",
-                question: "احسب <span class='math'>PGCD(315; 210)</span> باستعمال الفروق المتتابعة.",
-                exact: ["105"],
+                title: "تكوين أصغر عدد عشري",
+                reference: "الكتاب المدرسي ص 18",
+                question: "استعمل جميع الأرقام <span class='math'>0, 1, 3, 8</span> (مرة واحدة لكل رقم) لتكتب أصغر عدد عشري ممكن جزؤه الصحيح غير معدوم.",
+                exact: ["1,038"],
                 close: [],
                 points: 1,
-                hint1: "اطرح دائماً العدد الأصغر من الأكبر حتى تتساوى النتيجتان.",
-                hint2: "<span class='math'>315 - 210 = 105</span>، ثم قارن بين 210 و 105.",
-                steps: "<span class='math'>315 - 210 = 105</span><br><span class='math'>210 - 105 = 105</span><br>النتيجة: 105",
-                grading: [["إجراء الطرح الأول والثاني", "0,5 ن"], ["استنتاج القاسم المشترك الأكبر 105", "0,5 ن"]]
+                hint1: "لجعل العدد أصغر ما يمكن، نبدأ برتب الأجزاء الكبرى بأصغر رقم ممكن غير الصفر.",
+                hint2: "الجزء الصحيح يجب ألا يكون معدوماً، لذا نبدأ بـ 1 ثم الفاصلة وبعدها أصغر الأرقام تصاعدياً.",
+                steps: "الترتيب التصاعدي للأرقام المتاحة غير المبدوء بـ 0 للوحدات: 1,038<br>النتيجة: 1,038",
+                grading: [["ترتيب الأرقام بصورة صحيحة", "1 ن"]]
             },
             {
                 id: 4,
-                title: "خوارزمية إقليدس",
-                reference: "مستوحى من BEM 2021 (الأعداد معدلة)",
-                originalText: "أوجد القاسم المشترك الأكبر للعددين 1015 و 725.",
-                question: "احسب <span class='math'>PGCD(1015; 725)</span> باستعمال خوارزمية إقليدس.",
-                exact: ["145"],
+                title: "المفكوك النموذجي",
+                reference: "تمرين تطبيقي",
+                question: "اكتب المفكوك النموذجي للعدد العشري <span class='math'>345,67</span> باستعمال عملية الضرب في الكسور العشرية أو قوى 10 (اكتبه على شكل مجاميع وجداءات مثل a*100+...).",
+                exact: ["3×100+4×10+5+6×0,1+7×0,01", "3×100+4×10+5+6/10+7/100"],
                 close: [],
                 points: 1,
-                hint1: "أجرِ القسمة الإقليدية للأكبر على الأصغر، ثم اقسم القاسم على الباقي.",
-                hint2: "<span class='math'>1015 = 725 × 1 + 290</span>، ثم واصل القسمات حتى يصبح الباقي معدوماً.",
-                steps: "<span class='math'>1015 = 725 × 1 + 290</span><br><span class='math'>725 = 290 × 2 + 145</span><br><span class='math'>290 = 145 × 2 + 0</span><br>النتيجة: 145",
-                grading: [["القسمات المتتابعة", "0,75 ن"], ["تحديد آخر باقٍ غير معدوم 145", "0,25 ن"]]
+                hint1: "فكك العدد إلى مئات، عشرات، وحدات، أجزاء من عشرة، وأجزاء من مائة.",
+                hint2: "استعمل الجداءات: <span class='math'>3×100 + 4×10 + 5 + 6×0,1 + 7×0,01</span>.",
+                steps: "<span class='math'>345,67 = 3×100 + 4×10 + 5 + 6×0,1 + 7×0,01</span><br>النتيجة: 3×100+4×10+5+6×0,1+7×0,01",
+                grading: [["تفكيك الجزء الصحيح والجزء العشري", "1 ن"]]
             },
             {
                 id: 5,
-                title: "الأعداد الأولية فيما بينها",
-                reference: "تمرين تطبيقي",
-                originalText: "",
-                question: "هل العددان <span class='math'>14</span> و <span class='math'>15</span> أوليان فيما بينهما؟ (أجب بـ نعم أو لا)",
-                exact: ["نعم", "أوليان"],
+                title: "دلالة الأرقام في كتابتين مختلفتين",
+                reference: "الكتاب المدرسي ص 2",
+                question: "هل للرقمين <span class='math'>5</span> و <span class='math'>2</span> نفس الدلالة في العددين <span class='math'>25</span> و <span class='math'>52</span>؟ (أجب بـ لا أو خطأ)",
+                exact: ["لا", "خطأ", "ليسانفسالدلالة"],
                 close: [],
                 points: 1,
-                hint1: "عددان أوليان فيما بينهما قاسمهما المشترك الأكبر يساوي 1.",
-                hint2: "قواسم 14 هي (1, 2, 7, 14) وقواسم 15 هي (1, 3, 5, 15)، القاسم المشترك الوحيد هو 1.",
-                steps: "القاسم المشترك الأكبر للعددين 14 و 15 هو 1.<br>النتيجة: نعم",
-                grading: [["تحديد قواسم العددين أو PGCD", "0,5 ن"], ["الاستنتاج نعم", "0,5 ن"]]
+                hint1: "قارن مرتبة الرقم 5 في العدد الأول ومرتبته في العدد الثاني.",
+                hint2: "في 25 الرقم 5 يمثل الآحاد، وفي 52 الرقم 5 يمثل العشرات.",
+                steps: "في العدد 25: الرقم 5 يمثل الآحاد ورقم 2 يمثل العشرات.<br>في العدد 52: الرقم 5 يمثل العشرات ورقم 2 يمثل الآحاد.<br>النتيجة: لا",
+                grading: [["التعليل أو الإجابة بـ لا", "1 ن"]]
             },
             {
                 id: 6,
-                title: "اختزال الكسور",
-                reference: "مستوحى من الكتاب ص 18 ت 22",
-                originalText: "اكتب الكسر على شكل كسر غير قابل للاختزال.",
-                question: "اكتب الكسر <span class='math'>725 / 1015</span> على شكل كسر غير قابل للاختزال.",
-                exact: ["5/7", "5÷7"],
+                title: "الكتابة العشرية لكسر عشري",
+                reference: "مذكرات الأستاذة نادية ص 9",
+                question: "أعطِ الكتابة العشرية (بالفاصلة) للكسر: <span class='math'>243 / 100</span>.",
+                exact: ["2,43"],
                 close: [],
                 points: 1,
-                hint1: "استعمل القاسم المشترك الأكبر الذي حسبته في التمرين الرابع (<span class='math'>PGCD = 145</span>).",
-                hint2: "اقسم كلاً من البسط والمقام على 145.",
-                steps: "<span class='math'>725 ÷ 145 = 5</span><br><span class='math'>1015 ÷ 145 = 7</span><br>النتيجة: 5/7",
-                grading: [["القسمة على PGCD", "0,5 ن"], ["الكسر غير القابل للاختزال 5/7", "0,5 ن"]]
+                hint1: "القسمة على 100 تعني إزاحة الفاصلة بمرتبتين نحو اليسار.",
+                hint2: "<span class='math'>243 ÷ 100 = 2,43</span>.",
+                steps: "<span class='math'>243 / 100 = 2,43</span><br>النتيجة: 2,43",
+                grading: [["إزاحة الفاصلة بشكل صحيح", "1 ن"]]
             },
             {
                 id: 7,
-                title: "تعريف الجذر التربيعي",
+                title: "كتابة عدد عشري على شكل كسر عشري",
                 reference: "تمرين تطبيقي",
-                originalText: "",
-                question: "احسب الجذر التربيعي للعدد <span class='math'>121</span>.",
-                exact: ["11"],
-                close: ["-11"],
+                question: "اكتب العدد العشري <span class='math'>12,34</span> على شكل كسر عشري مقامه <span class='math'>100</span>.",
+                exact: ["1234/100", "1234÷100"],
+                close: [],
                 points: 1,
-                hint1: "ما هو العدد الموجب الذي مربعه يساوي 121؟",
-                hint2: "تذكّر أن <span class='math'>11 × 11 = 121</span>.",
-                steps: "<span class='math'>√121 = √11² = 11</span><br>النتيجة: 11",
-                grading: [["التعرف على المربع التام", "0,5 ن"], ["النتيجة 11", "0,5 ن"]]
+                hint1: "تخلص من الفاصلة بضرب وقسمة العدد على 100.",
+                hint2: "البسط سيكون العدد بدون فاصلة (1234) والمقام 100.",
+                steps: "<span class='math'>12,34 = 1234 / 100</span><br>النتيجة: 1234/100",
+                grading: [["وضع البسط والمقام بشكل صحيح", "1 ن"]]
             },
             {
                 id: 8,
-                title: "الحساب على الجذور (الجداء)",
-                reference: "الكتاب المدرسي ص 28",
-                originalText: "احسب الجداء وبسّط الناتج.",
-                question: "احسب وبسّط العبارة: <span class='math'>√2 × √8</span>",
-                exact: ["4"],
+                title: "حساب مجموع كسور عشرية وأعداد",
+                reference: "الكتاب المدرسي ص 17",
+                question: "احسب النتيجة العشرية للعبارة: <span class='math'>5 + 3/10 + 7/100</span>.",
+                exact: ["5,37"],
                 close: [],
                 points: 1,
-                hint1: "استعمل الخاصة: <span class='math'>√a × √b = √(a × b)</span>.",
-                hint2: "<span class='math'>2 × 8 = 16</span>، ثم احسب جذر 16.",
-                steps: "<span class='math'>√2 × √8 = √(2 × 8) = √16 = 4</span><br>النتيجة: 4",
-                grading: [["تطبيق خاصية الجداء تحت الجذر", "0,5 ن"], ["الحساب والبساطة 4", "0,5 ن"]]
+                hint1: "حوّل الكسور العشرية إلى كتابة عشرية ثم اجمعها مع الوحدة.",
+                hint2: "<span class='math'>5 + 0,3 + 0,07 = 5,37</span>.",
+                steps: "<span class='math'>5 + 0,3 + 0,07 = 5,37</span><br>النتيجة: 5,37",
+                grading: [["الحساب والجمع الصحيح", "1 ن"]]
             },
             {
                 id: 9,
-                title: "تبسيط جذر تربيعي",
-                reference: "مستوحى من BEM 2022",
-                originalText: "اكتب العبارة على الشكل a√b.",
-                question: "اكتب العدد <span class='math'>√75</span> على الشكل <span class='math'>a√3</span> حيث <span class='math'>a</span> عدد طبيعي.",
-                exact: ["5", "5√3"],
-                close: [],
+                title: "تفكيك كسر عشري إلى مجموع عدد وكسر",
+                reference: "تمرين تطبيقي",
+                question: "أتمم تفكيك الكسر <span class='math'>4560 / 1000</span> على شكل مجموع عدد طبيعي وكسر عشري أصغر من الواحد (اكتبه على الشكل a+b/1000).",
+                exact: ["4+560/1000", "4+56/100", "4+5/10+6/100"],
+                close: ["4,56"],
                 points: 1,
-                hint1: "اقسم 75 على أكبر مربع تام ممكن (مثل 4، 9، 16، 25، 36، 49).",
-                hint2: "<span class='math'>75 = 25 × 3</span>، واعلم أن <span class='math'>√25 = 5</span>.",
-                steps: "<span class='math'>√75 = √(25 × 3) = √25 × √3 = 5√3</span><br>النتيجة: 5",
-                grading: [["كتابة 75 على شكل جداء مربع تام", "0,5 ن"], ["التبسيط 5√3", "0,5 ن"]]
+                hint1: "<span class='math'>4560 / 1000 = 4560 ÷ 1000 = 4,56</span>.",
+                hint2: "الجزء الصحيح هو 4 والباقي يكتب على شكل كسر عشري.",
+                steps: "<span class='math'>4560 / 1000 = 4 + 560 / 1000</span><br>النتيجة: 4+560/1000",
+                grading: [["استخراج الجزء الصحيح والكسر المتبقي", "1 ن"]]
             },
             {
                 id: 10,
-                title: "مجموع جذور تربيعية",
+                title: "كتابة عشرية لمجموع مركب",
                 reference: "تمرين تطبيقي",
-                originalText: "",
-                question: "بسط العبارة الآتية: <span class='math'>√50 + √18</span>",
-                exact: ["8√2"],
-                close: [],
+                question: "عَبّر بكتابة عشرية عن المجموع: <span class='math'>15 + 2/10 + 5/1000</span>.",
+                exact: ["15,205"],
+                close: ["15,25"],
                 points: 1,
-                hint1: "اكتب كل جذر من الشكل <span class='math'>a√2</span> باستخراج المربع التام.",
-                hint2: "<span class='math'>50 = 25 × 2</span> و <span class='math'>18 = 9 × 2</span>.",
-                steps: "<span class='math'>√50 + √18 = √(25×2) + √(9×2) = 5√2 + 3√2 = 8√2</span><br>النتيجة: 8√2",
-                grading: [["تبسيط كل جذر على حدة", "1 ن"], ["الجمع واستخراج العامل المشترك 8√2", "1 ن"]]
+                hint1: "انتبه للمراتب الناقصة (مرتبة الأجزاء من مائة غير موجودة، نعوضها بصفر).",
+                hint2: "الأجزاء من عشرة هي 2، الأجزاء من مائة 0، والأجزاء من ألف هي 5.",
+                steps: "<span class='math'>15 + 0,2 + 0,005 = 15,205</span><br>النتيجة: 15,205",
+                grading: [["مراعاة الصفر في مرتبة الأجزاء من مائة", "1 ن"]]
             },
             {
                 id: 11,
-                title: "جداء أعداد تتضمن جذوراً",
-                reference: "الكتاب المدرسي ص 30",
-                originalText: "انشر وبسط الجداء.",
-                question: "احسب الجداء الآتي وبسطه: <span class='math'>3√2 × 5√8</span>",
-                exact: ["60"],
+                title: "الضرب في 100",
+                reference: "مذكرات 1م",
+                question: "احسب ذهنياً الناتج: <span class='math'>143,75 × 100</span>.",
+                exact: ["14375", "14375,0"],
                 close: [],
                 points: 1,
-                hint1: "اضرب الأعداد خارج الجذور في بعضها، وما تحت الجذور في بعضها.",
-                hint2: "<span class='math'>3 × 5 = 15</span> و <span class='math'>√2 × √8 = √16 = 4</span>.",
-                steps: "<span class='math'>3√2 × 5√8 = (3 × 5) × √(2 × 8) = 15 × √16 = 15 × 4 = 60</span><br>النتيجة: 60",
-                grading: [["ضرب المعاملات والجذور", "0,75 ن"], ["التبسيط النهائي 60", "0,25 ن"]]
+                hint1: "الضرب في 100 يعتمد على إزاحة الفاصلة بمرتبتين نحو اليمين.",
+                hint2: "<span class='math'>143,75 × 100 = 14375</span>.",
+                steps: "<span class='math'>143,75 × 100 = 14375</span><br>النتيجة: 14375",
+                grading: [["إزاحة الفاصلة بمرتبتين لليمين", "1 ن"]]
             },
             {
                 id: 12,
-                title: "نشر عبارة جبرية بالجذور",
-                reference: "مستوحى من BEM 2020",
-                originalText: "أنشر وبسط العبارة A.",
-                question: "أنشر وبسط العبارة: <span class='math'>√3 (√3 + 2)</span>",
-                exact: ["3+2√3", "2√3+3"],
+                title: "القسمة على 10",
+                reference: "الكتاب المدرسي ص 36",
+                question: "احسب ذهنياً الناتج: <span class='math'>7,4 ÷ 10</span>.",
+                exact: ["0,74"],
                 close: [],
                 points: 1,
-                hint1: "استعمل خاصية التوزيع: <span class='math'>a(b + c) = ab + ac</span>.",
-                hint2: "<span class='math'>√3 × √3 = 3</span>، و <span class='math'>√3 × 2 = 2√3</span>.",
-                steps: "<span class='math'>√3(√3 + 2) = √3 × √3 + √3 × 2 = 3 + 2√3</span><br>النتيجة: 3+2√3",
-                grading: [["النشر الصحيح للحدين", "1 ن"], ["التبسيط النهائي 3+2√3", "1 ن"]]
+                hint1: "القسمة على 10 تعني إزاحة الفاصلة بمرتبة واحدة نحو اليسار.",
+                hint2: "<span class='math'>7,4 ÷ 10 = 0,74</span>.",
+                steps: "<span class='math'>7,4 ÷ 10 = 0,74</span><br>النتيجة: 0,74",
+                grading: [["إزاحة الفاصلة مرتبة لليسار", "1 ن"]]
             },
             {
                 id: 13,
-                title: "جعل مقام ناطق",
-                reference: "الكتاب المدرسي ص 31",
-                originalText: "اجعل مقام الكسر عدداً ناطقاً.",
-                question: "اجعل مقام الكسر <span class='math'>6 / √3</span> عدداً ناطقاً (اكتب الناتج المبسط).",
-                exact: ["2√3"],
-                close: ["6√3/3"],
+                title: "البحث عن المضروب المجهول",
+                reference: "تمرين تطبيقي",
+                question: "أكمل الفراغ بالعدد المناسب (<span class='math'>10</span> أو <span class='math'>100</span> أو <span class='math'>1000</span>): <br><span class='math'>0,045 × ... = 45</span>.",
+                exact: ["1000"],
+                close: [],
                 points: 1,
-                hint1: "اضرب البسط والمقام في <span class='math'>√3</span>.",
-                hint2: "ستحصل على <span class='math'>6√3 / 3</span>، ثم اختزل العددين خارج الجذر.",
-                steps: "<span class='math'>6 / √3 = (6 × √3) / (√3 × √3) = 6√3 / 3 = 2√3</span><br>النتيجة: 2√3",
-                grading: [["الضرب في √3", "0,5 ن"], ["التبسيط والاختزال 2√3", "0,5 ن"]]
+                hint1: "تحركت الفاصلة في العدد 0,045 بـ 3 مراتب نحو اليمين لتصبح 45.",
+                hint2: "الإزاحة بـ 3 مراتب تعني الضرب في 1000.",
+                steps: "لتحويل 0,045 إلى 45 نزيح الفاصلة بثلاث مراتب لليمين.<br>النتيجة: 1000",
+                grading: [["تحديد العامل 1000 بدقة", "1 ن"]]
             },
             {
                 id: 14,
-                title: "حل معادلة من الشكل x² = a",
-                reference: "مستوحى من الكتاب ص 35",
-                originalText: "أوجد حلول المعادلة.",
-                question: "حل في <span class='math'>ℝ</span> المعادلة الآتية: <span class='math'>x² = 49</span> (اكتب الحل الموجب ثم السالب مفصولين بـ ;)",
-                exact: ["7;-7", "-7;7", "7,-7", "-7,7"],
-                close: ["7"],
+                title: "البحث عن المقسوم عليه المجهول",
+                reference: "تمرين تطبيقي",
+                question: "أكمل الفراغ بالعدد المناسب: <span class='math'>25,41 ÷ ... = 0,02541</span>.",
+                exact: ["1000"],
+                close: [],
                 points: 1,
-                hint1: "بما أن <span class='math'>49 > 0</span>، فللمعادلة حلان متقابلان.",
-                hint2: "هما <span class='math'>√49</span> و <span class='math'>-√49</span>.",
-                steps: "<span class='math'>x = √49 = 7</span> أو <span class='math'>x = -√49 = -7</span><br>النتيجة: 7;-7",
-                grading: [["إيجاد الحل الأول 7", "0,5 ن"], ["إيجاد الحل الثاني -7", "0,5 ن"]]
+                hint1: "تحركت الفاصلة نحو اليسار بـ 3 مراتب.",
+                hint2: "الإزاحة بـ 3 مراتب لليسار تعني القسمة على 1000.",
+                steps: "إزاحة الفاصلة بثلاث مراتب نحو اليسار تعني القسمة على 1000.<br>النتيجة: 1000",
+                grading: [["تحديد المقسوم عليه 1000", "1 ن"]]
             },
             {
                 id: 15,
-                title: "حل معادلة تقود إلى جذر",
-                reference: "تمرين تطبيقي",
-                originalText: "",
-                question: "حل المعادلة الآتية: <span class='math'>2x² = 50</span> (اكتب الحل الموجب فقط)",
-                exact: ["5"],
+                title: "التعليم على نصف مستقيم مدرج",
+                reference: "الكتاب المدرسي ص 18",
+                question: "على نصف مستقيم مدرج مبدؤه <span class='math'>O(0)</span> بوحدة تدريج <span class='math'>1 cm</span>، ما هي فاصلة نقطة تبعد بـ <span class='math'>3,5</span> تدريجات عن المبدأ نحو اليمين؟",
+                exact: ["3,5"],
                 close: [],
                 points: 1,
-                hint1: "اقسم أولاً طرفي المعادلة على 2.",
-                hint2: "ستحصل على <span class='math'>x² = 25</span>.",
-                steps: "<span class='math'>x² = 50 / 2 = 25</span><br><span class='math'>x = √25 = 5</span><br>النتيجة: 5",
-                grading: [["عزل x² لوحده (25)", "0,5 ن"], ["استنتاج الحل 5", "0,5 ن"]]
+                hint1: "المبدأ هو 0، والاتجاه نحو اليمين يعني إضافة التدريجات.",
+                hint2: "إذن الفاصلة هي مباشرة 3,5.",
+                steps: "الفاصلة تبعد بـ 3,5 وحدة عن المبدأ 0 نحو اليمين.<br>النتيجة: 3,5",
+                grading: [["تحديد الفاصلة 3,5", "1 ن"]]
             },
             {
                 id: 16,
-                title: "حساب عبارة حرفية بالجذور",
-                reference: "BEM 2019 (مستوحى)",
-                originalText: "احسب العبارة من أجل القيمة المعطاة.",
-                question: "احسب القيمة المضبوطة للعبارة <span class='math'>B = x² - 3</span> من أجل <span class='math'>x = √5</span>.",
-                exact: ["2"],
+                title: "مقارنة عددين عشريين",
+                reference: "الكتاب المدرسي ص 18",
+                question: "قارن بين العددين باستعمال الرمز المناسب (<` أو `>`): <br><span class='math'>3,7</span> ... <span class='math'>3,14</span> (اكتب الرمز فقط أو الجواب كاملاً مثل 3,7>3,14).",
+                exact: ["3,7>3,14", "3,7 > 3,14"],
                 close: [],
                 points: 1,
-                hint1: "عوّض بـ <span class='math'>√5</span> مكان <span class='math'>x</span>.",
-                hint2: "تذكّر أن <span class='math'>(√5)² = 5</span>.",
-                steps: "<span class='math'>B = (√5)² - 3 = 5 - 3 = 2</span><br>النتيجة: 2",
-                grading: [["التعويض الصحيح", "0,5 ن"], ["الحساب والتبسيط 2", "0,5 ن"]]
+                hint1: "قارن أولاً الأجزاء الصحيحة (متساوية)، ثم قارن الأجزاء من عشرة.",
+                hint2: "جزء العشرات في الأول هو 7 وفي الثاني هو 1، إذن 3,7 أكبر من 3,14 (أو بمساواة الأرقام: 3,70 > 3,14).",
+                steps: "مقارنة أجزاء من عشرة: 7 أكبر من 1.<br>النتيجة: 3,7 > 3,14",
+                grading: [["اختيار الرمز الصحيح >", "1 ن"]]
             },
             {
                 id: 17,
-                title: "مقارنة عددين يتضمنان جذوراً",
-                reference: "الكتاب المدرسي ص 32",
-                originalText: "قارن بين العددين.",
-                question: "أي العددين أكبر: <span class='math'>3√2</span> أم <span class='math'>4</span>؟ اكتب العدد الأكبر.",
-                exact: ["3√2", "3 جذر 2", "الثلاثة جذر اثنان"],
+                title: "ترتيب أعداد عشرية",
+                reference: "تمرين تطبيقي",
+                question: "رتّب الأعداد الآتية ترتيباً تصاعدياً (من الأصغر إلى الأكبر) مفصولاً بينها بـ `<`: <br><span class='math'>5,2 ؛ 5,02 ؛ 5,19 ؛ 5,1999</span>.",
+                exact: ["5,02<5,19<5,1999<5,2", "5,02 < 5,19 < 5,1999 < 5,2"],
                 close: [],
                 points: 1,
-                hint1: "ادخل العدد 3 تحت الجذر: <span class='math'>3√2 = √(3² × 2)</span>.",
-                hint2: "<span class='math'>3² × 2 = 9 × 2 = 18</span>، قارن بين <span class='math'>√18</span> و <span class='math'>√16</span> (<span class='math'>4 = √16</span>).",
-                steps: "<span class='math'>3√2 = √18</span> و <span class='math'>4 = √16</span><br>بما أن <span class='math'>18 > 16</span> فإن <span class='math'>3√2 > 4</span><br>النتيجة: 3√2",
-                grading: [["ربع العدد خارج الجذر وأدخله", "0,75 ن"], ["المقارنة والاستنتاج", "0,25 ن"]]
+                hint1: "وحّد عدد الأرقام بعد الفاصلة بإضافة الأصفار للمقارنة بدقة.",
+                hint2: "الأعداد تصبح: 5,2000 ؛ 5,0200 ؛ 5,1900 ؛ 5,1999.",
+                steps: "الترتيب: 5,02 < 5,19 < 5,1999 < 5,2<br>النتيجة: 5,02<5,19<5,1999<5,2",
+                grading: [["الترتيب التصاعدي السليم", "1 ن"]]
             },
             {
                 id: 18,
-                title: "تبسيط سلسلة عمليات بالجذور",
-                reference: "تمرين تطبيقي",
-                originalText: "",
-                question: "بسط العبارة: <span class='math'>A = 2√20 - √45 + 3√5</span>",
-                exact: ["4√5"],
+                title: "حصر عدد عشري بين عدديين طبيعيين",
+                reference: "الكتاب المدرسي ص 18",
+                question: "احصر العدد العشري <span class='math'>24,769</span> بين عددين طبيعيين متتاليين (اكتبه على الشكل a<24,769<b).",
+                exact: ["24<24,769<25", "24 < 24,769 < 25"],
                 close: [],
                 points: 1,
-                hint1: "بسط كل جذر من الشكل <span class='math'>a√5</span>.",
-                hint2: "<span class='math'>20 = 4 × 5</span> و <span class='math'>45 = 9 × 5</span>.",
-                steps: "<span class='math'>A = 2(2√5) - 3√5 + 3√5 = 4√5 - 3√5 + 3√5 = 4√5</span><br>النتيجة: 4√5",
-                grading: [["تبسيط الجذور الثلاثة", "1 ن"], ["الجمع الجبري النهائي 4√5", "1 ن"]]
+                hint1: "العدد الطبيعي الأصغر هو الجزء الصحيح نفسه.",
+                hint2: "العدد الطبيعي الأكبر هو الموالي مباشرة للجزء الصحيح (25).",
+                steps: "الجزء الصحيح هو 24.<br>إذن الحصر هو: 24 < 24,769 < 25<br>النتيجة: 24<24,769<25",
+                grading: [["كتابة الحصر الصحيح", "1 ن"]]
             },
             {
                 id: 19,
-                title: "تطبيق هندسي على الجذور",
-                reference: "مستوحى من دليل الأستاذ 4م",
-                originalText: "احسب طول ضلع مربع مساحته معطاة.",
-                question: "مربع مساحته <span class='math'>32 cm²</span>، ما هي القيمة المضبوطة لطول ضلعه <span class='math'>a</span> على الشكل <span class='math'>4√b</span>؟ (اكتب قيمة b فقط)",
-                exact: ["2"],
+                title: "القيمة المقربة إلى الوحدة بالنقصان",
+                reference: "مذكرات عقبة نوي ص 05",
+                question: "أعطِ القيمة المقربة إلى الوحدة بالنقصان للعدد <span class='math'>2017,379</span>.",
+                exact: ["2017"],
                 close: [],
                 points: 1,
-                hint1: "طول ضلع المربع هو جذر المساحة: <span class='math'>a = √32</span>.",
-                hint2: "فكك 32 إلى <span class='math'>16 × 2</span>.",
-                steps: "<span class='math'>a = √32 = √(16 × 2) = 4√2</span><br>إذن <span class='math'>b = 2</span><br>النتيجة: 2",
-                grading: [["كتابة العلاقة a = √32", "0,5 ن"], ["التبسيط واستخراج b = 2", "0,5 ن"]]
+                hint1: "القيمة المقربة إلى الوحدة بالنقصان هي ببساطة الجزء الصحيح للعدد.",
+                hint2: "الجزء الصحيح للعدد 2017,379 هو 2017.",
+                steps: "الجزء الصحيح للعدد هو 2017.<br>النتيجة: 2017",
+                grading: [["استخراج القيمة المقربة بالنقصان 2017", "1 ن"]]
             },
             {
                 id: 20,
-                title: "إدماج الموارد (PGCD والجذور)",
-                reference: "على نمط BEM",
-                originalText: "التمرين الإدماجي الشامل للمقطع الأول.",
-                question: "إذا كان <span class='math'>a = PGCD(300; 120)</span>، احسب قيمة <span class='math'>a</span> ثم بسط <span class='math'>√a</span>.",
-                exact: ["2√15", "جذر 60", "√60"],
-                close: ["60"],
+                title: "التدوير إلى الوحدة",
+                reference: "تمرين تطبيقي",
+                question: "أعطِ المدوّر إلى الوحدة للعدد العشري <span class='math'>12,65</span>.",
+                exact: ["13"],
+                close: [],
                 points: 1,
-                hint1: "احسب أولاً <span class='math'>PGCD(300; 120)</span> بخوارزمية إقليدس فتجد <span class='math'>60</span>.",
-                hint2: "ثم بسط <span class='math'>√60 = √(4 × 15) = 2√15</span>.",
-                steps: "<span class='math'>300 = 120 × 2 + 60</span><br><span class='math'>120 = 60 × 2 + 0</span> إذن <span class='math'>a = 60</span><br><span class='math'>√60 = √(4 × 15) = 2√15</span><br>النتيجة: 2√15",
-                grading: [["حساب PGCD(300; 120) = 60", "0,5 ن"], ["تبسيط الجذور 2√15 (أو إعطاء 60 كنصف علامة)", "0,5 ن"]]
+                hint1: "انظر إلى رقم الأجزاء من عشرة (الرقم بعد الفاصلة مباشرة).",
+                hint2: "بما أن رقم الأجزاء من عشرة هو 6 (وهو أكبر من أو يساوي 5)، فنقرب للعدد الموالي الأكبر.",
+                steps: "رقم الأجزاء من عشرة هو 6 (أكبر من 5)، إذن المدور إلى الوحدة هو زيادة 1 للجزء الصحيح.<br>النتيجة: 13",
+                grading: [["تحديد المدور الصحيح 13", "1 ن"]]
             }
         ];
 
@@ -534,19 +512,19 @@
                     <div class="points-badge" id="badge-${ex.id}">1 نقطة</div>
                 </div>
                 <div class="reference-text">المرجع: ${ex.reference}</div>
-                ${ex.originalText ? `<div class="original-text">نص الكتاب: ${ex.originalText}</div>` : ''}
                 <div class="question-text">${ex.question}</div>
                 
-                <!-- لوحة مفاتيح الرموز الرياضية الخاصة بالسنة 4م -->
+                <!-- لوحة مفاتيح الرموز الرياضية الخاصة بالسنة 1م (+ - * / , / < > = ⌫) -->
                 <div class="math-keypad">
-                    <button type="button" onclick="insertSymbol(${ex.id}, '√')">√</button>
-                    <button type="button" onclick="insertSymbol(${ex.id}, '²')">²</button>
-                    <button type="button" onclick="insertSymbol(${ex.id}, '±')">±</button>
+                    <button type="button" onclick="insertSymbol(${ex.id}, '+')">+</button>
                     <button type="button" onclick="insertSymbol(${ex.id}, '-')">−</button>
-                    <button type="button" onclick="insertSymbol(${ex.id}, ';')">;</button>
+                    <button type="button" onclick="insertSymbol(${ex.id}, '×')">×</button>
+                    <button type="button" onclick="insertSymbol(${ex.id}, '÷')">÷</button>
                     <button type="button" onclick="insertSymbol(${ex.id}, ',')">,</button>
                     <button type="button" onclick="insertSymbol(${ex.id}, '/')">/</button>
-                    <button type="button" onclick="insertSymbol(${ex.id}, '×')">×</button>
+                    <button type="button" onclick="insertSymbol(${ex.id}, '<')"><</button>
+                    <button type="button" onclick="insertSymbol(${ex.id}, '>')">></button>
+                    <button type="button" onclick="insertSymbol(${ex.id}, '=')">=</button>
                     <button type="button" onclick="backspace(${ex.id})">⌫</button>
                 </div>
 
@@ -590,9 +568,7 @@
             const normUser = normalize(inputVal);
             const fb = document.getElementById(`fb-${id}`);
 
-            // التحقق من الإجابة الدقيقة (exact)
             let isExact = ex.exact.some(ans => normalize(ans) === normUser);
-            // التحقق من الإجابة القريبة (close - تأخذ نصف العلامة 0.5)
             let isClose = ex.close.some(ans => normalize(ans) === normUser);
 
             if (isExact) {
@@ -619,14 +595,13 @@
                 studentAttempts[id]++;
                 if (studentAttempts[id] === 1) {
                     fb.className = "feedback-msg error";
-                    fb.innerHTML = `لا بأس، حاول مرة أخرى. 💡 <strong>تلميح 1:</strong> ${ex.hint1}`;
+                    fb.innerHTML = `لا بأس، حاول مرة أخرى. 💡 <strong>التلميح 1:</strong> ${ex.hint1}`;
                     fb.style.display = "block";
                 } else if (studentAttempts[id] === 2) {
                     fb.className = "feedback-msg error";
-                    fb.innerHTML = `تشجع، اقتربت من الحل. 💡 <strong>تلميح 2:</strong> ${ex.hint2}`;
+                    fb.innerHTML = `تشجع، اقتربت من الحل. 💡 <strong>التلميح 2:</strong> ${ex.hint2}`;
                     fb.style.display = "block";
                 } else {
-                    // المحاولة الثالثة: قفل السؤال وإظهار الحل وسلم التنقيط
                     questionStatus[id] = true;
                     updateHeader();
                     fb.className = "feedback-msg error";
